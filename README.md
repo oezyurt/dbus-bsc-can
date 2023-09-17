@@ -22,3 +22,5 @@ Edit the CAN device name
 nano /data/dbus-bsc-can/config.ini 
 ```
 
+## Issues:
+- run only on VenusOS Large Image
