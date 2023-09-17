@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import com.victron.velib 1.0
 
+
 MbPage {
 	id: root
 
@@ -12,14 +13,34 @@ MbPage {
 	property VBusItem dcCurrent: VBusItem { bind: service.path("/Dc/0/Current") }
 	property VBusItem midVoltage: VBusItem { bind: service.path("/Dc/0/MidVoltage") }
 	property VBusItem productId: VBusItem { bind: service.path("/ProductId") }
-	property VBusItem bsc: VBusItem { bind: service.path("/bsc") }
+	property VBusItem nrOfDistributors: VBusItem { bind: service.path("/NrOfDistributors") }
+
+
+	property PageLynxDistributorList distributorListPage
 
 	property bool isFiamm48TL: productId.value === 0xB012
+	property int numberOfDistributors: nrOfDistributors.valid ? nrOfDistributors.value : 0
 
 	title: service.description
 	summary: [soc.item.format(0), dcVoltage.text, dcCurrent.text]
 
-	model: VisualItemModel {
+	/* PageLynxDistributorList cannot use Component for its subpages, because of the summary.
+	 * Therefor create it upon reception of /NrOfDistributors instead of when accessing the page
+	 * to prevent a ~3s loading time. */
+	onNumberOfDistributorsChanged: {
+		if (distributorListPage == undefined && numberOfDistributors > 0) {
+			distributorListPage = distributorPageComponent.createObject(root)
+		}
+	}
+
+	Component {
+		id: distributorPageComponent
+		PageLynxDistributorList {
+			bindPrefix: service.path("")
+		}
+	}
+
+	model: VisibleItemModel {
 		MbItemOptions {
 			description: qsTr("Switch")
 			bind: service.path("/Mode")
@@ -67,7 +88,6 @@ MbPage {
 
 		MbItemRow {
 			description: qsTr("Battery")
-			show: item.valid
 			values: [
 				MbTextBlock { item: dcVoltage; width: 90; height: 25 },
 				MbTextBlock { item: dcCurrent; width: 90; height: 25 },
@@ -77,10 +97,12 @@ MbPage {
 
 		MbItemValue {
 			id: soc
+
 			description: qsTr("State of charge")
-			item.bind: service.path("/Soc")
-			item.unit: "%"
-			show: item.valid
+			item {
+				bind: service.path("/Soc")
+				unit: "%"
+			}
 		}
 
 		MbItemValue {
@@ -91,18 +113,18 @@ MbPage {
 
 		MbItemValue {
 			description: qsTr("Battery temperature")
+			show: item.valid
 			item {
 				bind: service.path("/Dc/0/Temperature")
-				unit: "°C"
+				displayUnit: user.temperatureUnit
 			}
-			show: item.valid
 		}
 
 		MbItemValue {
 			description: qsTr("Air temperature")
 			item {
 				bind: service.path("/AirTemperature")
-				unit: "°C"
+				displayUnit: user.temperatureUnit
 			}
 			show: item.valid
 		}
@@ -198,13 +220,13 @@ MbPage {
 
 		MbSubMenu {
 			description: qsTr("BSC Details")
-			show: bsc.valid
+			//show: bsc.valid ??
 			subpage: Component {
 				PageBatteryBsc {
-					bindPrefix: service.path("")
 				}				
 			}
 		}
+
 
 		MbSubMenu {
 			description: qsTr("Alarms")
@@ -261,6 +283,12 @@ MbPage {
 				}
 			}
 			show: isFiamm48TL
+		}
+
+		MbSubMenu {
+			description: qsTr("Fuses")
+			subpage: distributorListPage
+			show: numberOfDistributors > 0
 		}
 
 		MbSubMenu {
