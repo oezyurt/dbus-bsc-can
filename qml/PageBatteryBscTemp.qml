@@ -7,7 +7,7 @@ MbPage {
 	property string colour: "#ddd"
 	title: service.description + " | Temperature"
 
-	model: VisualItemModel {
+	model: VisibleItemModel {
 
 		MbItemRow {
 			description: qsTr("Temp (1-4)")
