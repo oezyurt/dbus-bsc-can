@@ -13,7 +13,7 @@ MbPage {
 	
 	title: service.description + " | BMS Data"
 
-	model: VisualItemModel {
+	model: VisibleItemModel {
 		MbItemRow {
 			description: qsTr("Charge, Discharge")
 			values: [
