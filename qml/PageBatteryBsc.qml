@@ -3,6 +3,10 @@ import com.victron.velib 1.0
 
 MbPage {
 	id: root
+
+	property variant service: DBusServices.get("com.victronenergy.battery.bsc")
+	property string bindPrefix: service.path("") 
+
 	property VBusItem _bms0CellVolt: VBusItem { bind: service.path("/bsc/bms0/Voltages/Cell1") }
 	property VBusItem _bms1CellVolt: VBusItem { bind: service.path("/bsc/bms1/Voltages/Cell1") }
 	property VBusItem _bms2CellVolt: VBusItem { bind: service.path("/bsc/bms2/Voltages/Cell1") }
@@ -13,6 +17,8 @@ MbPage {
 	property VBusItem _bms7CellVolt: VBusItem { bind: service.path("/bsc/bms7/Voltages/Cell1") }
 	property VBusItem _bms8CellVolt: VBusItem { bind: service.path("/bsc/bms8/Voltages/Cell1") }
 	property VBusItem _bms9CellVolt: VBusItem { bind: service.path("/bsc/bms9/Voltages/Cell1") }
+
+
 	property VBusItem _bms10CellVolt: VBusItem { bind: service.path("/bsc/bms10/Voltages/Cell1") }
 	property VBusItem _bms11CellVolt: VBusItem { bind: service.path("/bsc/bms11/Voltages/Cell1") }
 	property VBusItem _bms12CellVolt: VBusItem { bind: service.path("/bsc/bms12/Voltages/Cell1") }
@@ -22,10 +28,11 @@ MbPage {
 	property VBusItem _bms16CellVolt: VBusItem { bind: service.path("/bsc/bms16/Voltages/Cell1") }
 	property VBusItem _bms17CellVolt: VBusItem { bind: service.path("/bsc/bms17/Voltages/Cell1") }
 	
-	property string bindPrefix
 	title: service.description
 
-	model: VisualItemModel {
+	model: VisibleItemModel  { 
+		// statt VisualItemModel =>  https://community.victronenergy.com/questions/179527/bug-hiding-gui-objects-not-working.html 
+		
 		MbSubMenu {
 			description: qsTr("Temperature")
 			show: bsc.valid
@@ -35,6 +42,7 @@ MbPage {
 				}				
 			}
 		}
+
 		MbSubMenu {
 			description: qsTr("BMS Bluetooth 0")
 			show: _bms0CellVolt.value>0.0 && _bms0CellVolt.value<65.0
@@ -62,6 +70,7 @@ MbPage {
 				}				
 			}
 		}
+
 		MbSubMenu {
 			description: qsTr("BMS Bluetooth 3")
 			show: _bms3CellVolt.value>0.0 && _bms3CellVolt.value<65.0
@@ -89,6 +98,8 @@ MbPage {
 				}				
 			}
 		}
+		
+
 		MbSubMenu {
 			description: qsTr("BMS Bluetooth 6")
 			show: _bms6CellVolt.value>0.0 && _bms6CellVolt.value<65.0
@@ -99,7 +110,6 @@ MbPage {
 			}
 		}
 
-		
 		MbSubMenu {
 			description: qsTr("BMS serial 0")
 			show: _bms7CellVolt.value>0.0 && _bms7CellVolt.value<65.0
@@ -119,7 +129,7 @@ MbPage {
 			}
 		}
 		MbSubMenu {
-			description: qsTr("BMS serial 2")
+			description: qsTr("BMS Serial 2")
 			show: _bms9CellVolt.value>0.0 && _bms9CellVolt.value<65.0
 			subpage: Component {
 				PageBatteryBscBms {
@@ -129,7 +139,7 @@ MbPage {
 		}
 		
 		MbSubMenu {
-			description: qsTr("BMS serial 3")
+			description: qsTr("BMS Serial 3")
 			show: _bms10CellVolt.value>0.0 && _bms10CellVolt.value<65.0
 			subpage: Component {
 				PageBatteryBscBms {
@@ -137,6 +147,7 @@ MbPage {
 				}				
 			}
 		}
+
 		MbSubMenu {
 			description: qsTr("BMS serial 4")
 			show: _bms11CellVolt.value>0.0 && _bms11CellVolt.value<65.0
