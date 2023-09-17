@@ -34,4 +34,3 @@ nano /data/dbus-bsc-can/config.ini
 
 ## Issues:
 - run only on VenusOS Large Image
-- BMS 0 and 1 visible w/o data
