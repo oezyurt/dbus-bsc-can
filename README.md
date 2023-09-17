@@ -9,19 +9,21 @@ The following data is displayed under 'BSC Details':
 - FET state of the BMSs
 - Balance state + current of the BMSs<br>
 
-## Installation
+## Installation (<=3.0?)
 ```bash
 wget https://github.com/shining-man/dbus-bsc-can/archive/main.zip
 unzip main.zip
 chmod 755 dbus-bsc-can-main/install.sh
 ./dbus-bsc-can-main/install.sh
 ```
-## Für VenusOS3.1
+## Für VenusOS 3.1
 ```bash
 wget https://github.com/oezyurt/dbus-bsc-can/archive/refs/tags/VenusOS3.1.zip
-unzip VenusOS3.1.zip
-chmod 755 dbus-bsc-can-VenusOS3.1/install.sh
-./dbus-bsc-can-VenusOS3.1/install.sh
+mv VenusOS3.1.zip main.zip
+unzip main.zip
+mv dbus-bsc-can-VenusOS3.1 dbus-bsc-can-main
+chmod 755 dbus-bsc-can-main/install.sh
+./dbus-bsc-can-main/install.sh
 ```
 
 
