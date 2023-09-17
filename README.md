@@ -18,7 +18,7 @@ chmod 755 dbus-bsc-can-main/install.sh
 ```
 ## Für VernuOS3.1
 ```bash
-wget https://github.com/oezyurt/dbus-bsc-can/archive/VenusOS31.zip
+wget https://github.com/oezyurt/dbus-bsc-can.git
 unzip main.zip
 chmod 755 dbus-bsc-can-main/install.sh
 ./dbus-bsc-can-main/install.sh
