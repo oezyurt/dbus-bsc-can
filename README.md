@@ -18,8 +18,8 @@ chmod 755 dbus-bsc-can-main/install.sh
 ```
 ## Für VenusOS3.1
 ```bash
-wget https://github.com/oezyurt/dbus-bsc-can.git
-unzip main.zip
+wget https://github.com/oezyurt/dbus-bsc-can/archive/refs/tags/VenusOS3.1.zip
+unzip VenusOS3.1.zip
 chmod 755 dbus-bsc-can-main/install.sh
 ./dbus-bsc-can-main/install.sh
 ```
