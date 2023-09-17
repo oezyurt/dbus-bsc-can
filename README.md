@@ -16,7 +16,7 @@ unzip main.zip
 chmod 755 dbus-bsc-can-main/install.sh
 ./dbus-bsc-can-main/install.sh
 ```
-## Für VernuOS3.1
+## Für VenusOS3.1
 ```bash
 wget https://github.com/oezyurt/dbus-bsc-can.git
 unzip main.zip
